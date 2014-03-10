@@ -1,4 +1,4 @@
 ionic-talk
 ==========
 
-An introduction to ionic
+Présentation du framework Ionic

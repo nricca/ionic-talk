@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Todo</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="lib/css/ionic.css">
+
+</head>
+<body ng-app="todo" ng-controller="TodoCtrl">
+
+<ion-side-menus>
+
+    <!-- Center content -->
+    <ion-pane ion-side-menu-content>
+        <header class="bar bar-header bar-dark">
+            <button class="button button-icon" ng-click="toggleProjects()">
+                <i class="icon ion-navicon"></i>
+            </button>
+            <h1 class="title">{{activeProject.title}}</h1>
+            <!-- New Task button-->
+            <button class="button button-icon icon ion-ios7-compose-outline" ng-click="newTask()">
+            </button>
+        </header>
+        <ion-content has-header="true" scroll="false">
+            <ion-list>
+                <ion-item ng-repeat="task in activeProject.tasks | orderBy:'done'" class="item-icon-right" item="task">
+                    {{task.title}}
+                    <!--i ></i-->
+                    <button class="button button-icon icon" ng-class="{'ion-ios7-checkmark-outline': !task.done, 'ion-ios7-checkmark': task.done}" ng-click="done(task)">
+                    </button>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-pane>
+
+    <!-- Left menu -->
+    <ion-side-menu side="left">
+        <header class="bar bar-header bar-dark">
+
+            <div class="buttons">
+                <button class="button button-icon icon ion-ios7-minus-outline"
+                        ng-click="showDelete=!showDelete"></button>
+                <h1 class="title">Tasks</h1>
+                <button class="button button-icon icon ion-ios7-compose-outline"
+                        ng-click="newProject()"></button>
+            </div>
+        </header>
+        <ion-content has-header="true" scroll="false">
+            <ion-list show-delete="showDelete"
+                      on-delete="deleteProject(project)">
+                <ion-item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
+                    {{project.title}}
+                    </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+
+</ion-side-menus>
+
+<!-- Modal template -->
+<script id="new-task.html" type="text/ng-template">
+
+    <div class="modal">
+
+        <!-- Modal header bar -->
+        <header class="bar bar-header bar-secondary">
+            <h1 class="title">New Task</h1>
+            <button class="button button-clear button-positive" ng-click="closeNewTask()">Cancel</button>
+        </header>
+
+        <!-- Modal content area -->
+        <ion-content has-header="true">
+
+            <form ng-submit="createTask(task)">
+                <div class="list">
+                    <label class="item item-input">
+                        <textarea placeholder="What do you need ?" ng-model="task.title"></textarea>
+                    </label>
+                </div>
+                <div class="padding">
+                    <button type="submit" class="button button-block button-positive">Create Task</button>
+                </div>
+            </form>
+
+        </ion-content>
+
+    </div>
+
+</script>
+
+<script src="lib/js/ionic.js"></script>
+<script src="lib/js/angular/angular.js"></script>
+<script src="lib/js/angular/angular-animate.js"></script>
+<script src="lib/js/angular/angular-route.js"></script>
+<script src="lib/js/angular/angular-touch.js"></script>
+<script src="lib/js/angular/angular-sanitize.js"></script>
+<script src="lib/js/angular-ui/angular-ui-router.js"></script>
+<script src="lib/js/ionic-angular.js"></script>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
